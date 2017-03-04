@@ -2,7 +2,20 @@ import unittest
 
 import heapq
 
-from median import MaxHeapObj, MaxHeap, MinHeap
+from median import MaxHeapObj, MaxHeap, MinHeap, RunningMedian
+
+
+class RunningMedianTest(unittest.TestCase):
+    def test_running_median(self):
+        xs = [5, 60, 35, 42, 2, 38, 6, 5, 8, 300, 1500, 900, 4, 400, 2]
+        expected_medians = [
+            5, 32.5, 35, 38.5, 35, 36.5, 35, 20.5, 8, 21.5, 35, 36.5, 35, 36.5,
+            35
+        ]
+        mc = RunningMedian()
+        for x, expected_median in zip(xs, expected_medians):
+            mc.push(x)
+            self.assertEqual(mc.median(), expected_median)
 
 
 class MinHeapTest(unittest.TestCase):
