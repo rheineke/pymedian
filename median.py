@@ -1,11 +1,26 @@
-"""Time efficient median.
-Optimal solution for tracking median value of a distribution. Employs a min-
-and max-heap"""
+"""
+Time and space efficient running median.
+
+The container has space complexity O(N) where N is the number of elements. The
+running median can be updated in O(log N) time.
+
+Implementation notes
+
+Running median uses two heaps internally, a min- and max-heap. Each new element
+is pushed to one of these heaps after comparing against the root nodes. If the
+heaps differ in length by more than one, then the larger heap is popped and the
+value is pushed to the other heap. The median is either the root node of the
+larger heap or the average of the root nodes of both heaps if they are the same
+length.
+
+http://stackoverflow.com/questions/10657503/find-running-median-from-a-stream-of-integers
+"""
 
 import heapq
 
 
 class RunningMedian:
+    """Running median of a stream of elements"""
     def __init__(self):
         self._min_heap = MinHeap()
         self._max_heap = MaxHeap()
@@ -42,6 +57,7 @@ class RunningMedian:
 
 
 class MinHeap:
+    """Convenience object for heapq functions"""
     def __init__(self):
         self.h = []
 
@@ -59,6 +75,7 @@ class MinHeap:
 
 
 class MaxHeap(MinHeap):
+    """Convenience object for heapq functions with comparisons reversed"""
     def heappush(self, x):
         heapq.heappush(self.h, MaxHeapObj(x))
 
@@ -70,6 +87,7 @@ class MaxHeap(MinHeap):
 
 
 class MaxHeapObj:
+    """Convenience object that reverses the comparison functions"""
     def __init__(self, val):
         self.val = val
 
