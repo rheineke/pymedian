@@ -15,7 +15,7 @@ length.
 
 http://stackoverflow.com/questions/10657503/find-running-median-from-a-stream-of-integers
 """
-
+from collections.abc import Sequence
 import heapq
 
 
@@ -56,7 +56,7 @@ class RunningMedian:
             return (self._max_heap[0] + self._min_heap[0]) / 2
 
 
-class MinHeap:
+class MinHeap(Sequence):
     """Convenience object for heapq functions"""
     def __init__(self):
         self.h = []
