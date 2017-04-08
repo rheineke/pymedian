@@ -18,6 +18,9 @@ http://stackoverflow.com/questions/10657503/find-running-median-from-a-stream-of
 from collections.abc import Sequence
 import heapq
 
+import numpy as np
+import pandas as pd
+
 
 class RunningMedian:
     """Running median of a stream of elements"""
@@ -62,6 +65,8 @@ class MinHeap(Sequence):
         self.h = []
 
     def heappush(self, x):
+        if pd.isnull(x):
+            return
         heapq.heappush(self.h, x)
 
     def heappop(self):
@@ -77,6 +82,8 @@ class MinHeap(Sequence):
 class MaxHeap(MinHeap):
     """Convenience object for heapq functions with comparisons reversed"""
     def heappush(self, x):
+        if pd.isnull(x):
+            return
         heapq.heappush(self.h, MaxHeapObj(x))
 
     def heappop(self):
@@ -95,6 +102,8 @@ class MaxHeapObj:
         return self.val > other.val
 
     def __eq__(self, other):
+        if pd.isnull(self.val) and pd.isnull(other.val):
+            return True
         return self.val == other.val
 
     def __str__(self):

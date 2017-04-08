@@ -2,6 +2,8 @@ import unittest
 
 import heapq
 
+import numpy as np
+
 from median import MaxHeapObj, MaxHeap, MinHeap, RunningMedian
 
 
@@ -12,6 +14,14 @@ class RunningMedianTest(unittest.TestCase):
             5, 32.5, 35, 38.5, 35, 36.5, 35, 20.5, 8, 21.5, 35, 36.5, 35, 36.5,
             35
         ]
+        mc = RunningMedian()
+        for x, expected_median in zip(xs, expected_medians):
+            mc.push(x)
+            self.assertEqual(mc.median(), expected_median)
+
+    def test_null_values(self):
+        xs = [42, -35, np.nan, 0]
+        expected_medians = [42, 3.5, 3.5, 0]
         mc = RunningMedian()
         for x, expected_median in zip(xs, expected_medians):
             mc.push(x)
@@ -29,7 +39,21 @@ class MinHeapTest(unittest.TestCase):
         # fetch "top" values
         self.assertEqual(minh[0], snd_x)  # "4 12"
         # fetch and remove "top" values
-        self.assertEqual(minh.heappop(), snd_x)  # "4 12"
+        self.assertEqual(minh.heappop(), snd_x)  # "12"
+
+    def test_null_values(self):
+        minh = MinHeap()
+        # add some values
+        fst_x = 12
+        snd_x = np.nan
+        thr_x = 4
+        minh.heappush(fst_x)
+        minh.heappush(snd_x)
+        minh.heappush(thr_x)
+        # fetch "top" values
+        self.assertEqual(minh[0], thr_x)  # "4 12"
+        # fetch and remove "top" values
+        self.assertEqual(minh.heappop(), thr_x)  # "12"
 
 
 class MaxHeapTest(unittest.TestCase):
