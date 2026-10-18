@@ -6,7 +6,7 @@ class RunningMedian:
         self.key = key_function
         self.inverse_key = inverse_key_function
         self.inputs = []  # Length n where n is number of elements
-        self.key_counts = array('I')  # Length k where k is max key value
+        self.key_counts = array("I")  # Length k where k is max key value
         self.total = 0
         # self.start_indices = []  # Length k where k is max key value
 
@@ -22,7 +22,7 @@ class RunningMedian:
             ext = [0] * (k - len(self.key_counts) + 1)
             self.key_counts.extend(ext)
         self.key_counts[k] += 1
-        print('Key counts: {}\n'.format(self.key_counts))
+        print(f"Key counts: {self.key_counts}\n")
 
         self.total += 1
 
@@ -30,7 +30,7 @@ class RunningMedian:
         """Calculate median and return. Time complexity O(k)"""
         # Calculate median index
         median_index = self.total // 2
-        print('Median index: {}'.format(median_index))
+        print(f"Median index: {median_index}")
 
         # Calculate the key value of the median index O(k)
         cumsum = 0
@@ -40,7 +40,7 @@ class RunningMedian:
                 break
             cumsum += key_cnt
 
-        print('Key count index: {}'.format(i))
+        print(f"Key count index: {i}")
         # i = key(median value)
         # Cases:
         # 1. Number of elements even and cumsum == median_index
