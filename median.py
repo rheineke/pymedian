@@ -15,15 +15,16 @@ length.
 
 http://stackoverflow.com/questions/10657503/find-running-median-from-a-stream-of-integers
 """
-from collections.abc import Sequence
-import heapq
 
-import numpy as np
+import heapq
+from collections.abc import Sequence
+
 import pandas as pd
 
 
 class RunningMedian:
     """Running median of a stream of elements"""
+
     def __init__(self):
         self._min_heap = MinHeap()
         self._max_heap = MaxHeap()
@@ -61,6 +62,7 @@ class RunningMedian:
 
 class MinHeap(Sequence):
     """Convenience object for heapq functions"""
+
     def __init__(self):
         self.h = []
 
@@ -81,6 +83,7 @@ class MinHeap(Sequence):
 
 class MaxHeap(MinHeap):
     """Convenience object for heapq functions with comparisons reversed"""
+
     def heappush(self, x):
         if pd.isnull(x):
             return
@@ -95,6 +98,7 @@ class MaxHeap(MinHeap):
 
 class MaxHeapObj:
     """Convenience object that reverses the comparison functions"""
+
     def __init__(self, val):
         self.val = val
 
